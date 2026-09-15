@@ -40,6 +40,7 @@ a{color:var(--navy)}
 .hero-grid{position:relative;display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center;width:100%}
 .pill{display:inline-block;background:#fff;border:1px solid var(--border);color:var(--navy);padding:6px 14px;border-radius:999px;font-size:14px;font-weight:700}
 .hero h1{font-size:44px;line-height:1.15;margin:12px 0;color:var(--navy)}
+.hero h1 .green{color:var(--green)}
 .lead{font-size:18px;color:#111;font-weight:600;margin:0 0 8px}
 .hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin:16px 0}
 .trust{display:flex;gap:16px;flex-wrap:wrap;color:var(--text);font-size:14px;font-weight:600}
@@ -73,8 +74,33 @@ a{color:var(--navy)}
 .quote-card{background:var(--navy);color:#fff;border-radius:var(--radius);padding:28px;display:flex;flex-direction:column;justify-content:center;font-size:20px}
 .flow{margin-top:16px;background:var(--yellow);border:1px dashed var(--navy);color:var(--navy);padding:10px 14px;border-radius:12px;font-weight:700;text-align:center}
 .flow.large{font-size:20px;background:rgba(255,255,255,.15);color:#fff;border-color:var(--yellow)}
-.tags{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:18px 0}
-.tags span{background:var(--navy);color:#fff;padding:6px 16px;border-radius:999px;font-size:14px}
+/* Proof strip */
+.proof-strip{background:var(--navy);color:#fff;border-top:3px solid var(--yellow);border-bottom:3px solid var(--yellow)}
+.proof-inner{display:flex;gap:18px;justify-content:space-between;flex-wrap:wrap;padding:12px 20px;font-size:15px}
+.proof-inner strong{color:var(--yellow)}
+
+/* Reviews */
+.reviews{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.review{background:#fff;border:1px solid var(--border);border-radius:16px;padding:20px;box-shadow:0 8px 20px rgba(0,0,0,.06)}
+.r-stars{font-size:15px;margin-bottom:8px}
+.review p{font-size:15px;margin:0 0 10px}
+.review strong{color:var(--navy);font-size:14px}
+
+/* Author */
+.author-box{display:flex;gap:18px;align-items:flex-start;background:#fff;border:1px solid var(--border);border-radius:18px;padding:24px;box-shadow:0 8px 20px rgba(0,0,0,.06)}
+.avatar.big{width:64px;height:64px;font-size:22px;flex-shrink:0}
+.author-box h3{margin:0 0 6px;color:var(--navy);font-size:22px}
+.author-box p{margin:0;color:var(--text)}
+
+.mini-price{font-size:20px;margin-bottom:6px}.mini-price s{color:var(--muted)}.mini-price strong{font-size:30px;color:var(--navy)}
+.stars{margin-bottom:12px;font-size:15px}.stars small{color:var(--muted)}
+.price-cta{display:grid;gap:8px;justify-items:end;text-align:right}
+.price-cta small{color:#ffe9a8}
+.offer-note{color:var(--yellow);font-weight:700}
+.quote-note{display:block;margin-top:12px;font-size:13px;color:#ffe9a8}
+.muted-light{color:#ffe9a8}
+.modal-product small{color:var(--muted)}
+#waPay{display:inline-block;text-decoration:none;text-align:center;margin:12px 0}
 
 /* Cards */
 .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
@@ -122,6 +148,10 @@ a{color:var(--navy)}
   .hero-card{max-width:420px;margin:0 auto}
   .ebook-cover img{max-height:58svh}
   .cards{grid-template-columns:1fr}
+  .reviews{grid-template-columns:1fr}
+  .author-box{flex-direction:column}
+  .price-cta{justify-items:stretch;text-align:center}
+  .proof-inner{justify-content:center;text-align:center}
   .card.wide{grid-column:span 1}
   .inside-grid{grid-template-columns:repeat(2,1fr)}
   .section{padding:44px 0}

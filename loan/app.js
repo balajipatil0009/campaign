@@ -1,12 +1,13 @@
-// Static only — no backend. Dummy checkout modal + UI interactions.
+// Order flow — collect name + WhatsApp number, then hand off to WhatsApp.
 (function () {
-  const modal = document.getElementById('modal');
-  const closeBtn = document.getElementById('modalClose');
-  const form = document.getElementById('demoForm');
-  const step1 = document.getElementById('modalStep1');
-  const step2 = document.getElementById('modalStep2');
-  const payBtn = document.getElementById('payBtn');
-  const sticky = document.getElementById('stickyBar');
+  var WA_NUMBER = '917028250948';
+  var modal = document.getElementById('modal');
+  var closeBtn = document.getElementById('modalClose');
+  var form = document.getElementById('orderForm');
+  var step1 = document.getElementById('modalStep1');
+  var step2 = document.getElementById('modalStep2');
+  var payBtn = document.getElementById('payBtn');
+  var sticky = document.getElementById('stickyBar');
 
   function openModal() {
     step1.hidden = false;
@@ -14,6 +15,10 @@
     modal.classList.add('open');
     modal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
+    setTimeout(function () {
+      var n = document.getElementById('fName');
+      if (n) n.focus();
+    }, 100);
   }
   function closeModal() {
     modal.classList.remove('open');
@@ -21,43 +26,52 @@
     document.body.style.overflow = '';
   }
 
-  document.querySelectorAll('[data-buy]').forEach((b) => b.addEventListener('click', openModal));
+  document.querySelectorAll('[data-buy]').forEach(function (b) {
+    b.addEventListener('click', openModal);
+  });
   closeBtn.addEventListener('click', closeModal);
-  modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+  modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
   document.getElementById('doneBtn').addEventListener('click', closeModal);
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', function (e) {
     e.preventDefault();
-    const name = document.getElementById('fName').value.trim() || 'मित्र';
+    var nameEl = document.getElementById('fName');
+    var contactEl = document.getElementById('fContact');
+    var name = (nameEl.value || '').trim() || 'मित्र';
+    var phone = (contactEl.value || '').trim();
+    if (!nameEl.value.trim() || !contactEl.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
     payBtn.disabled = true;
-    payBtn.textContent = 'Processing…';
-    setTimeout(() => {
+    payBtn.textContent = 'नोंद होत आहे…';
+    setTimeout(function () {
+      var orderId = 'ORD-' + Math.floor(1000 + Math.random() * 9000);
       document.getElementById('sName').textContent = name;
-      document.getElementById('orderId').textContent =
-        'DEMO-' + Math.floor(1000 + Math.random() * 9000);
+      document.getElementById('orderId').textContent = orderId;
+      var msg = 'नमस्कार, मला कर्ज ईबुक हवी आहे (' + orderId + '). नाव: ' + name + ', WhatsApp: ' + phone;
+      document.getElementById('waPay').href =
+        'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg);
       step1.hidden = true;
       step2.hidden = false;
       payBtn.disabled = false;
-      payBtn.textContent = 'Pay ₹199 (Demo)';
-    }, 1100);
+      payBtn.textContent = 'पुढे जा — पेमेंट करा ₹199';
+    }, 700);
   });
 
   // FAQ accordion
-  document.querySelectorAll('.faq').forEach((item) => {
-    const q = item.querySelector('.faq-q');
-    q.addEventListener('click', () => {
-      const open = item.classList.contains('open');
-      document.querySelectorAll('.faq').forEach((f) => f.classList.remove('open'));
+  document.querySelectorAll('.faq').forEach(function (item) {
+    var q = item.querySelector('.faq-q');
+    q.addEventListener('click', function () {
+      var open = item.classList.contains('open');
+      document.querySelectorAll('.faq').forEach(function (f) { f.classList.remove('open'); });
       if (!open) item.classList.add('open');
     });
   });
 
-  // Sticky bar on scroll
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 480) sticky.classList.add('show');
-    else sticky.classList.remove('show');
-  }, { passive: true });
+  // Sticky bar — always visible (better for mobile conversion)
+  if (sticky) sticky.classList.add('show');
 
   document.getElementById('year').textContent = new Date().getFullYear();
 })();
